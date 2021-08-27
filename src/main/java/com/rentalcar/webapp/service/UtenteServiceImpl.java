@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -31,22 +33,34 @@ public class UtenteServiceImpl implements UtenteService{
         return utenteRepository.searchCustomers(theSearchName);
     }
 
-    /*@Override
-    public List<Utente> getAllUtenti() {
-        return utenteRepository.getAllUtenti();
+    @Override
+    public List<Utente> searchBy(String theSearchName){
+        return utenteRepository.findByNomeContainingOrCognomeContainingOrSsoIdContainingOrRuolo_RuoloContaining(theSearchName, theSearchName, theSearchName, theSearchName);
+    }
+
+    @Override
+    public List<Utente> searchByDateBetween(Date start, Date end) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(end);
+        c.add(Calendar.DATE, 1);
+        end = c.getTime();
+        return utenteRepository.findByDatadinascitaBetween(start, end);
     }
 
     @Override
     public Utente getCustomer(Long id) {
-        return utenteRepository.getCustomer(id);
+        return utenteRepository.findById(id).orElse(null);
     }
 
     @Override
     public Utente findUserBySSO(String sso) {
-        return utenteRepository.findUserBySSO(sso);
+        return utenteRepository.findBySsoIdLike(sso);
     }
 
-
+    /*@Override
+    public List<Utente> getAllUtenti() {
+        return utenteRepository.getAllUtenti();
+    }
 
     @Override
     public void save(Utente theCustomer) {

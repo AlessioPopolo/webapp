@@ -2,22 +2,26 @@ package com.rentalcar.webapp.service;
 
 import com.rentalcar.webapp.entity.Utente;
 
+import java.util.Date;
 import java.util.List;
 
 public interface UtenteService {
 
-    public List<Utente> getAll();
+    List<Utente> getAll();
 
-    public List<Utente> getAllCustomers();
+    List<Utente> getAllCustomers();
 
     List<Utente> searchCustomers(String theSearchName);
 
-    /*Utente getCustomer(Long id);
+    List<Utente> searchBy(String theSearchName);
+
+    List<Utente> searchByDateBetween(Date start, Date end);
+
+    Utente getCustomer(Long id);
 
     Utente findUserBySSO(String sso);
 
-
-    void save(Utente theCustomer);
+    /*void save(Utente theCustomer);
 
     void update(Utente theCustomer);
 
