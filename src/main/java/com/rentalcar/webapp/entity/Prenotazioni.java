@@ -1,5 +1,6 @@
 package com.rentalcar.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -15,10 +16,12 @@ public class Prenotazioni {
 
     @ManyToOne
     @JoinColumn(name = "utenteId", nullable = false)
+    @JsonIgnore
     private Utente utente;
 
     @ManyToOne
     @JoinColumn(name = "automezzoId", nullable = false)
+    @JsonIgnore
     private Automezzo automezzo;
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
