@@ -48,6 +48,11 @@ public class UtenteServiceImpl implements UtenteService{
     }
 
     @Override
+    public Utente getUtente(Long id) {
+        return utenteRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public Utente getCustomer(Long id) {
         return utenteRepository.findById(id).orElse(null);
     }
@@ -61,6 +66,13 @@ public class UtenteServiceImpl implements UtenteService{
     @Transactional
     public void insertUtente(Utente utente) {
         utenteRepository.save(utente);
+    }
+
+    @Override
+    @Transactional
+    public void deleteUtente(Utente utente)
+    {
+        utenteRepository.delete(utente);
     }
 
     /*@Override

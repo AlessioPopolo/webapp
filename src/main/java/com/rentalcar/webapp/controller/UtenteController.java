@@ -123,6 +123,36 @@ public class UtenteController {
         String code = HttpStatus.OK.toString();
         String message = String.format("Modifica utente %s Eseguita Con Successo", utente.getId());
 
-        return new ResponseEntity<InfoMsg>(new InfoMsg(code, message), HttpStatus.CREATED);
+        return new ResponseEntity<>(new InfoMsg(code, message), HttpStatus.CREATED);
+    }
+
+    // ------------------- ELIMINAZIONE UTENTE ------------------------------------
+    @RequestMapping(value = "/elimina/{id}", method = RequestMethod.DELETE, produces = "application/json" )
+    public ResponseEntity<?> deleteUtente(@PathVariable("id") Long id)
+            throws NotFoundException
+    {
+        logger.info("Eliminiamo l'utente con id " + id);
+
+        Utente utente = utenteService.getUtente(id);
+
+        if (utente == null)
+        {
+            String MsgErr = String.format("Utente %s non presente nel DB! ",id);
+
+            logger.warn(MsgErr);
+
+            throw new NotFoundException(MsgErr);
+        }
+
+        utenteService.deleteUtente(utente);
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode responseNode = mapper.createObjectNode();
+
+        responseNode.put("code", HttpStatus.OK.toString());
+        responseNode.put("message", "Eliminazione Utente " + id + " Eseguita Con Successo");
+
+        return new ResponseEntity<>(responseNode, new HttpHeaders(), HttpStatus.OK);
+
     }
 }
