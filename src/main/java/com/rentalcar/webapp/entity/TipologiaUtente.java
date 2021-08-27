@@ -16,6 +16,10 @@ public class TipologiaUtente {
     public TipologiaUtente() {
     }
 
+    public TipologiaUtente(Long id) {
+        this.id = id;
+    }
+
     public TipologiaUtente(Long id, String ruolo) {
         this.id = id;
         this.ruolo = ruolo;

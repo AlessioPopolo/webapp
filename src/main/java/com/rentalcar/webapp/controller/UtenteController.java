@@ -1,5 +1,8 @@
 package com.rentalcar.webapp.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.rentalcar.webapp.dtos.InfoMsg;
 import com.rentalcar.webapp.entity.Utente;
 import com.rentalcar.webapp.service.UtenteService;
 import javassist.NotFoundException;
@@ -7,8 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -83,5 +88,41 @@ public class UtenteController {
 
         }
         return new ResponseEntity<>(utente, HttpStatus.OK);
+    }
+
+    // ------------------- INSERIMENTO UTENTE ------------------------------------
+    @PostMapping(value = "/inserisci")
+    public ResponseEntity<?> insertUtente(@RequestBody Utente utente) {
+        logger.info("Salviamo l'utente con ssoid " + utente.getSsoId());
+
+        utenteService.insertUtente(utente);
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode responseNode = mapper.createObjectNode();
+
+        responseNode.put("code", HttpStatus.OK.toString());
+        responseNode.put("message", String.format("Inserimento Utente %s Eseguito Con Successo", utente.getId()));
+
+        return new ResponseEntity<>(responseNode, new HttpHeaders(), HttpStatus.CREATED);
+    }
+
+    // ------------------- MODIFICA UTENTE ------------------------------------
+    @RequestMapping(value = "/modifica", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateUtente(@RequestBody Utente utente) throws NotFoundException {
+        logger.info("Modifichiamo l'utente con id " + utente.getId());
+        Utente check = utenteService.getCustomer(utente.getId());
+        if (check == null){
+            String ErrMsg = "Utente con id = " + utente.getId() + " non trovato!";
+
+            logger.warn(ErrMsg);
+
+            throw new NotFoundException(ErrMsg);
+        }
+        utenteService.insertUtente(utente);
+
+        String code = HttpStatus.OK.toString();
+        String message = String.format("Modifica utente %s Eseguita Con Successo", utente.getId());
+
+        return new ResponseEntity<InfoMsg>(new InfoMsg(code, message), HttpStatus.CREATED);
     }
 }

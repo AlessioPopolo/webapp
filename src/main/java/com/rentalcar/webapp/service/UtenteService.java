@@ -21,6 +21,8 @@ public interface UtenteService {
 
     Utente findUserBySSO(String sso);
 
+    void insertUtente(Utente utente);
+
     /*void save(Utente theCustomer);
 
     void update(Utente theCustomer);

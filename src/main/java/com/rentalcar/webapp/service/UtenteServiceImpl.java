@@ -57,6 +57,12 @@ public class UtenteServiceImpl implements UtenteService{
         return utenteRepository.findBySsoIdLike(sso);
     }
 
+    @Override
+    @Transactional
+    public void insertUtente(Utente utente) {
+        utenteRepository.save(utente);
+    }
+
     /*@Override
     public List<Utente> getAllUtenti() {
         return utenteRepository.getAllUtenti();

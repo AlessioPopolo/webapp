@@ -10,11 +10,11 @@ import java.util.Set;
 @Table(name = "utenti")
 public class Utente {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-    @Column(name="SSO_ID", unique=true, nullable=false)
+    @Column(name="SSO_ID", unique=true)
     private String ssoId;
 
     @Column(name = "password")
@@ -37,7 +37,7 @@ public class Utente {
     @OneToMany(mappedBy = "utente")
     private Set<Prenotazioni> prenotazioni;
 
-    /*public Utente(){}
+    public Utente(){}
 
     public Utente(Long id, String ssoId, String password, String nome, String cognome, Date datadinascita, TipologiaUtente ruolo) {
         this.id = id;
@@ -64,7 +64,7 @@ public class Utente {
         this.cognome = cognome;
         this.datadinascita = datadinascita;
         this.ruolo = ruolo;
-    }*/
+    }
 
     public Long  getId() {
         return id;
