@@ -13,9 +13,10 @@ import java.util.Set;
 public class Automezzo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "targa")
+    @Column(name = "targa", unique = true)
     private String targa;
 
     @Column(name = "casacostruttrice")

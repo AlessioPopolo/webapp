@@ -21,4 +21,10 @@ public class AutomezzoServiceImpl implements AutomezzoService{
         return automezzoRepository.findAll();
     }
 
+    @Override
+    public List<Automezzo> searchBy(String theSearchName){
+        return automezzoRepository.findByCasacostruttriceContainingOrModelloContainingOrTargaContainingOrCategoria_CategoriaContaining(theSearchName, theSearchName, theSearchName, theSearchName);
+    }
+
 }
+/*findByNomeContainingOrCognomeContainingOrSsoIdContainingOrRuolo_RuoloContaining*/

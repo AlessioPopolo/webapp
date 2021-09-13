@@ -8,4 +8,6 @@ public interface AutomezzoService {
 
     List<Automezzo> getAll();
 
+    List<Automezzo> searchBy(String theSearchName);
+
 }
