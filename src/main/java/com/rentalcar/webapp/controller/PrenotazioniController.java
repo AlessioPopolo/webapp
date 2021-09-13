@@ -66,8 +66,6 @@ public class PrenotazioniController {
     public ResponseEntity<Prenotazioni> insertPrenotazione(@RequestBody Prenotazioni prenotazione) {
         logger.info("Salviamo la prenotazione con id " + prenotazione.getId());
 
-
-
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode responseNode = mapper.createObjectNode();
 
@@ -125,5 +123,29 @@ public class PrenotazioniController {
 
         return new ResponseEntity<>(responseNode, new HttpHeaders(), HttpStatus.OK);
 
+    }
+
+    // ------------------- APPROVA PRENOTAZIONE ------------------------------------
+    @RequestMapping(value = "/approva/{id}", method = RequestMethod.PUT, produces = "application/json")
+    public ResponseEntity<?> approvePrenotazione(@PathVariable("id") Long id) throws NotFoundException {
+        logger.info("Approviamo la prenotazione con id " + id);
+        Prenotazioni prenotazione = prenotazioniService.getPrenotazione(id);
+        if (prenotazione == null){
+            String MsgErr = String.format("Prenotazione %s non presente nel DB! ",id);
+
+            logger.warn(MsgErr);
+
+            throw new NotFoundException(MsgErr);
+        }
+
+        prenotazioniService.approvePrenotazione(id);
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode responseNode = mapper.createObjectNode();
+
+        responseNode.put("code", HttpStatus.OK.toString());
+        responseNode.put("message", "Approvazione Prenotazione " + id + " Eseguita Con Successo");
+
+        return new ResponseEntity<>(responseNode, new HttpHeaders(), HttpStatus.OK);
     }
 }

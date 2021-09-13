@@ -42,4 +42,10 @@ public class PrenotazioniServiceImpl implements PrenotazioniService{
     public void deletePrenotazione(Prenotazioni prenotazione) {
         prenotazioniRepository.delete(prenotazione);
     }
+
+    @Override
+    @Transactional
+    public void approvePrenotazione(Long id) {
+        prenotazioniRepository.approve(id);
+    }
 }
