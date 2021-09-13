@@ -1,7 +1,6 @@
 package com.rentalcar.webapp.service;
 
 import com.rentalcar.webapp.entity.Prenotazioni;
-import com.rentalcar.webapp.entity.Utente;
 
 import java.util.List;
 
