@@ -19,8 +19,6 @@ public interface PrenotazioniService {
     void approvePrenotazione(Long id);
 
     /*
-    void approve(Prenotazioni prenotazione);
-
     boolean checkEditableOrDeletableBeforeXDaysPrenotazione(Date start);
 
     boolean checkAvailableVehicleInDatePrenotazione(Prenotazioni prenotazione);
