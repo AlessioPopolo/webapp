@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rentalcar.webapp.dtos.InfoMsg;
 import com.rentalcar.webapp.entity.Prenotazioni;
+import com.rentalcar.webapp.entity.Utente;
 import com.rentalcar.webapp.service.PrenotazioniService;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
