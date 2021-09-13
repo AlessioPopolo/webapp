@@ -9,6 +9,7 @@ import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -94,5 +95,35 @@ public class PrenotazioniController {
         String message = String.format("Modifica prenotazione %s Eseguita Con Successo", prenotazione.getId());
 
         return new ResponseEntity<>(new InfoMsg(code, message), HttpStatus.CREATED);
+    }
+
+    // ------------------- ELIMINAZIONE PRENOTAZIONE ------------------------------------
+    @RequestMapping(value = "/elimina/{id}", method = RequestMethod.DELETE, produces = "application/json" )
+    public ResponseEntity<?> deletePrenotazione(@PathVariable("id") Long id)
+            throws NotFoundException
+    {
+        logger.info("Eliminiamo la prenotazione con id " + id);
+
+        Prenotazioni prenotazione = prenotazioniService.getPrenotazione(id);
+
+        if (prenotazione == null)
+        {
+            String MsgErr = String.format("Prenotazione %s non presente nel DB! ",id);
+
+            logger.warn(MsgErr);
+
+            throw new NotFoundException(MsgErr);
+        }
+
+        prenotazioniService.deletePrenotazione(prenotazione);
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode responseNode = mapper.createObjectNode();
+
+        responseNode.put("code", HttpStatus.OK.toString());
+        responseNode.put("message", "Eliminazione Prenotazione " + id + " Eseguita Con Successo");
+
+        return new ResponseEntity<>(responseNode, new HttpHeaders(), HttpStatus.OK);
+
     }
 }

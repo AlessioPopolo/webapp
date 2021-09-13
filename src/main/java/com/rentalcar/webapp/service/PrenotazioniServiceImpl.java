@@ -36,4 +36,10 @@ public class PrenotazioniServiceImpl implements PrenotazioniService{
     public Prenotazioni insertPrenotazione(Prenotazioni prenotazione) {
         return prenotazioniRepository.save(prenotazione);
     }
+
+    @Override
+    @Transactional
+    public void deletePrenotazione(Prenotazioni prenotazione) {
+        prenotazioniRepository.delete(prenotazione);
+    }
 }

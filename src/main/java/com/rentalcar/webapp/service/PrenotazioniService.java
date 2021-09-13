@@ -14,10 +14,9 @@ public interface PrenotazioniService {
 
     Prenotazioni insertPrenotazione(Prenotazioni prenotazione);
 
-    /*void save(Prenotazioni prenotazione);
+    void deletePrenotazione(Prenotazioni prenotazione);
 
-    void update(Prenotazioni prenotazione);
-
+    /*
     void delete(Long id);
 
     void approve(Prenotazioni prenotazione);
