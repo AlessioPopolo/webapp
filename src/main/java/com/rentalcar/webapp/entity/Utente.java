@@ -1,5 +1,7 @@
 package com.rentalcar.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -30,10 +32,12 @@ public class Utente {
     @Column(name = "datadinascita")
     private Date datadinascita;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "ruolo")
     private TipologiaUtente ruolo;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "utente")
     private Set<Prenotazioni> prenotazioni;
 

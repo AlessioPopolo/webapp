@@ -30,15 +30,4 @@ public interface UtenteRepository extends JpaRepository<Utente, Long> {
     @Query
     Utente findBySsoIdLike(String ssoid);
 
-    /*List<Utente> getAllUtenti();
-
-    Utente getCustomer(Long id);
-
-    void save(Utente theCustomer);
-
-    void update(Utente theCustomer);
-
-    void delete(Long id);
-
-    Utente findUserBySSO(String sso);*/
 }

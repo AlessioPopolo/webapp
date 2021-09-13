@@ -27,9 +27,4 @@ public interface UtenteService {
 
     void deleteUtente(Utente utente);
 
-    /*void save(Utente theCustomer);
-
-    void update(Utente theCustomer);
-
-    void delete(Long id);*/
 }

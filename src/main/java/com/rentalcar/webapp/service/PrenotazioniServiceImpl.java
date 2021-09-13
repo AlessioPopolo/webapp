@@ -20,4 +20,20 @@ public class PrenotazioniServiceImpl implements PrenotazioniService{
     {
         return prenotazioniRepository.findAll();
     }
+
+    @Override
+    public List<Prenotazioni> getPrenotazioniByUser(Long id) {
+        return prenotazioniRepository.findAllByUtente(id);
+    }
+
+    @Override
+    public Prenotazioni getPrenotazione(Long id) {
+        return prenotazioniRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public Prenotazioni insertPrenotazione(Prenotazioni prenotazione) {
+        return prenotazioniRepository.save(prenotazione);
+    }
 }

@@ -1,5 +1,7 @@
 package com.rentalcar.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -11,7 +13,7 @@ import java.util.Set;
 @Table(name = "automezzi")
 public class Automezzo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "targa")
@@ -27,10 +29,12 @@ public class Automezzo {
     @Column(name = "immatricolazione")
     private Date immatricolazione;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "categoria", nullable = false)
     private TipologiaAutomezzo categoria;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "automezzo")
     private Set<Prenotazioni> prenotazioni;
 
@@ -109,10 +113,17 @@ public class Automezzo {
     public void setPrenotazioni(Set<Prenotazioni> prenotazioni) {
         this.prenotazioni = prenotazioni;
     }
+
     @Override
     public String toString() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-yyyy");
-        String dataFormat = simpleDateFormat.format(immatricolazione);
-        return "Automezzo [Targa=" + targa + ", casa costruttrice=" + casacostruttrice + ", modello=" + modello + ", anno di immatricolazione=" + dataFormat + ", categoria=" + categoria.getCategoria() + "]";
+        return "Automezzo{" +
+                "id=" + id +
+                ", targa='" + targa + '\'' +
+                ", casacostruttrice='" + casacostruttrice + '\'' +
+                ", modello='" + modello + '\'' +
+                ", immatricolazione=" + immatricolazione +
+                ", categoria=" + categoria +
+                ", prenotazioni=" + prenotazioni +
+                '}';
     }
 }

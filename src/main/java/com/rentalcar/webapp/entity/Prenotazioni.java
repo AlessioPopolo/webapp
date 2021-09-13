@@ -1,5 +1,6 @@
 package com.rentalcar.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,18 +11,18 @@ import java.util.Date;
 @Table(name = "prenotazioni")
 public class Prenotazioni {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "utenteId", nullable = false)
-    @JsonIgnore
     private Utente utente;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "automezzoId", nullable = false)
-    @JsonIgnore
     private Automezzo automezzo;
 
     @DateTimeFormat(pattern="yyyy-MM-dd")

@@ -75,23 +75,4 @@ public class UtenteServiceImpl implements UtenteService{
         utenteRepository.delete(utente);
     }
 
-    /*@Override
-    public List<Utente> getAllUtenti() {
-        return utenteRepository.getAllUtenti();
-    }
-
-    @Override
-    public void save(Utente theCustomer) {
-        utenteRepository.save(theCustomer);
-    }
-
-    @Override
-    public void update(Utente theCustomer) {
-        utenteRepository.update(theCustomer);
-    }
-
-    @Override
-    public void delete(Long id) {
-        utenteRepository.delete(id);
-    }*/
 }
