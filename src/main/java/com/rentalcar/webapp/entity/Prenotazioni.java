@@ -14,12 +14,12 @@ public class Prenotazioni {
     @Column(name = "id")
     private Long id;
 
-    @JsonBackReference
+    @JsonBackReference(value = "utente-prenotazione")
     @ManyToOne
     @JoinColumn(name = "utenteId", nullable = false)
     private Utente utente;
 
-    @JsonBackReference
+    @JsonBackReference(value = "automezzo-prenotazione")
     @ManyToOne
     @JoinColumn(name = "automezzoId", nullable = false)
     private Automezzo automezzo;
