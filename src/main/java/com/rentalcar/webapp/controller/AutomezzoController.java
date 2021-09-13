@@ -86,53 +86,51 @@ public class AutomezzoController {
     }
 
     // ------------------- MODIFICA AUTOMEZZO ------------------------------------
-    /*@RequestMapping(value = "/modifica", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateUtente(@RequestBody Utente utente) throws NotFoundException {
-        logger.info("Modifichiamo l'utente con id " + utente.getId());
-        Utente check = utenteService.getCustomer(utente.getId());
+    @RequestMapping(value = "/modifica", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateAutomezzo(@RequestBody Automezzo automezzo) throws NotFoundException {
+        logger.info("Modifichiamo l'automezzo con id " + automezzo.getId());
+        Automezzo check = automezzoService.getAutomezzo(automezzo.getId());
         if (check == null){
-            String ErrMsg = "Utente con id = " + utente.getId() + " non trovato!";
+            String ErrMsg = "Automezzo con id = " + automezzo.getId() + " non trovato!";
 
             logger.warn(ErrMsg);
 
             throw new NotFoundException(ErrMsg);
         }
-        utenteService.insertUtente(utente);
+        automezzoService.insertAutomezzo(automezzo);
 
         String code = HttpStatus.OK.toString();
-        String message = String.format("Modifica utente %s Eseguita Con Successo", utente.getId());
+        String message = String.format("Modifica automezzo %s Eseguita Con Successo", automezzo.getId());
 
         return new ResponseEntity<>(new InfoMsg(code, message), HttpStatus.CREATED);
     }
-*/
     // ------------------- ELIMINAZIONE AUTOMEZZO ------------------------------------
-    /*@RequestMapping(value = "/elimina/{id}", method = RequestMethod.DELETE, produces = "application/json" )
-    public ResponseEntity<?> deleteUtente(@PathVariable("id") Long id)
+    @RequestMapping(value = "/elimina/{id}", method = RequestMethod.DELETE, produces = "application/json" )
+    public ResponseEntity<?> deleteAutomezzo(@PathVariable("id") Long id)
             throws NotFoundException
     {
-        logger.info("Eliminiamo l'utente con id " + id);
+        logger.info("Eliminiamo l'automezzo con id " + id);
 
-        Utente utente = utenteService.getUtente(id);
+        Automezzo automezzo = automezzoService.getAutomezzo(id);
 
-        if (utente == null)
+        if (automezzo == null)
         {
-            String MsgErr = String.format("Utente %s non presente nel DB! ",id);
+            String MsgErr = String.format("Automezzo %s non presente nel DB! ",id);
 
             logger.warn(MsgErr);
 
             throw new NotFoundException(MsgErr);
         }
 
-        utenteService.deleteUtente(utente);
+        automezzoService.deleteAutomezzo(automezzo);
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode responseNode = mapper.createObjectNode();
 
         responseNode.put("code", HttpStatus.OK.toString());
-        responseNode.put("message", "Eliminazione Utente " + id + " Eseguita Con Successo");
+        responseNode.put("message", "Eliminazione Automezzo " + id + " Eseguita Con Successo");
 
         return new ResponseEntity<>(responseNode, new HttpHeaders(), HttpStatus.OK);
 
     }
-*/
 }

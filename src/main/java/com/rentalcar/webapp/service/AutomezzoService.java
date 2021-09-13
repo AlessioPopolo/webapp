@@ -18,4 +18,6 @@ public interface AutomezzoService {
     List<Automezzo> findAutoByCategoria(String categoria);
 
     void insertAutomezzo(Automezzo automezzo);
+
+    void deleteAutomezzo(Automezzo automezzo);
 }

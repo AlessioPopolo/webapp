@@ -54,4 +54,11 @@ public class AutomezzoServiceImpl implements AutomezzoService{
         automezzoRepository.save(automezzo);
     }
 
+    @Override
+    @Transactional
+    public void deleteAutomezzo(Automezzo automezzo)
+    {
+        automezzoRepository.delete(automezzo);
+    }
+
 }
