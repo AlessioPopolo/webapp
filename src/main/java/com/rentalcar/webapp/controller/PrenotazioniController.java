@@ -77,7 +77,7 @@ public class PrenotazioniController {
 
     // ------------------- MODIFICA PRENOTAZIONE ------------------------------------
     @RequestMapping(value = "/modifica", method = RequestMethod.PUT)
-    public ResponseEntity<?> updatePrenotazione(@RequestBody Prenotazioni prenotazione) throws NotFoundException {
+    public ResponseEntity<?> updatePrenotazione(@RequestBody Prenotazioni prenotazione) throws Exception {
         logger.info("Modifichiamo la prenotazione con id " + prenotazione.getId());
         Prenotazioni check = prenotazioniService.getPrenotazione(prenotazione.getId());
         if (check == null){
@@ -86,6 +86,13 @@ public class PrenotazioniController {
             logger.warn(ErrMsg);
 
             throw new NotFoundException(ErrMsg);
+        }
+        if (!prenotazioniService.checkEditableOrDeletableBeforeXDaysPrenotazione(check.getStartdate())){
+            String ErrMsg = "Non è possibile modificare una prenotazione meno di 2 giorni dall'inizio della stessa";
+
+            logger.warn(ErrMsg);
+
+            throw new Exception(ErrMsg);
         }
         prenotazioniService.insertPrenotazione(prenotazione);
 
@@ -98,7 +105,7 @@ public class PrenotazioniController {
     // ------------------- ELIMINAZIONE PRENOTAZIONE ------------------------------------
     @RequestMapping(value = "/elimina/{id}", method = RequestMethod.DELETE, produces = "application/json" )
     public ResponseEntity<?> deletePrenotazione(@PathVariable("id") Long id)
-            throws NotFoundException
+            throws Exception
     {
         logger.info("Eliminiamo la prenotazione con id " + id);
 
@@ -111,6 +118,13 @@ public class PrenotazioniController {
             logger.warn(MsgErr);
 
             throw new NotFoundException(MsgErr);
+        }
+        if (!prenotazioniService.checkEditableOrDeletableBeforeXDaysPrenotazione(prenotazione.getStartdate())){
+            String ErrMsg = "Non è possibile eliminare una prenotazione meno di 2 giorni dall'inizio della stessa";
+
+            logger.warn(ErrMsg);
+
+            throw new Exception(ErrMsg);
         }
 
         prenotazioniService.deletePrenotazione(prenotazione);

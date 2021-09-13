@@ -2,6 +2,7 @@ package com.rentalcar.webapp.service;
 
 import com.rentalcar.webapp.entity.Prenotazioni;
 
+import java.util.Date;
 import java.util.List;
 
 public interface PrenotazioniService {
@@ -18,9 +19,9 @@ public interface PrenotazioniService {
 
     void approvePrenotazione(Long id);
 
-    /*
     boolean checkEditableOrDeletableBeforeXDaysPrenotazione(Date start);
 
+    /*
     boolean checkAvailableVehicleInDatePrenotazione(Prenotazioni prenotazione);
 
     boolean checkDataEndAfterDataStart(Prenotazioni prenotazione);*/

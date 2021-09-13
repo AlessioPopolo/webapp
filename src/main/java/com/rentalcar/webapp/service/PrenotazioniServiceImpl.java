@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -47,5 +50,12 @@ public class PrenotazioniServiceImpl implements PrenotazioniService{
     @Transactional
     public void approvePrenotazione(Long id) {
         prenotazioniRepository.approve(id);
+    }
+
+    @Override
+    public boolean checkEditableOrDeletableBeforeXDaysPrenotazione(Date start) {
+        LocalDateTime ldt = LocalDateTime.ofInstant(start.toInstant(), ZoneId.systemDefault()).minusDays(2);
+        if (ldt.isAfter(LocalDateTime.now())){ return true;}
+        else {return false;}
     }
 }
