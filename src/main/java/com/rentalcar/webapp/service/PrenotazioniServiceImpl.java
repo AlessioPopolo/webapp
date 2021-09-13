@@ -58,4 +58,14 @@ public class PrenotazioniServiceImpl implements PrenotazioniService{
         if (ldt.isAfter(LocalDateTime.now())){ return true;}
         else {return false;}
     }
+
+    @Override
+    public boolean checkDataEndAfterDataStart(Prenotazioni prenotazione) {
+        LocalDateTime ldtStart = LocalDateTime.ofInstant(prenotazione.getStartdate().toInstant(), ZoneId.systemDefault());
+        LocalDateTime ldtEnd = LocalDateTime.ofInstant(prenotazione.getEnddate().toInstant(), ZoneId.systemDefault());
+        if (ldtEnd.isAfter(ldtStart) && ldtStart.isAfter(LocalDateTime.now())){
+            return true;
+        }
+        return false;
+    }
 }

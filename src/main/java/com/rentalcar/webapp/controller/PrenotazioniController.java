@@ -63,8 +63,16 @@ public class PrenotazioniController {
 
     // ------------------- INSERIMENTO PRENOTAZIONE ------------------------------------
     @PostMapping(value = "/inserisci")
-    public ResponseEntity<Prenotazioni> insertPrenotazione(@RequestBody Prenotazioni prenotazione) {
+    public ResponseEntity<Prenotazioni> insertPrenotazione(@RequestBody Prenotazioni prenotazione) throws Exception {
         logger.info("Salviamo la prenotazione con id " + prenotazione.getId());
+
+        if (!prenotazioniService.checkDataEndAfterDataStart(prenotazione)){
+            String ErrMsg = "Non è possibile inserire una prenotazione con data inizio posteriore a data fine o anteriore a oggi";
+
+            logger.warn(ErrMsg);
+
+            throw new Exception(ErrMsg);
+        }
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode responseNode = mapper.createObjectNode();
