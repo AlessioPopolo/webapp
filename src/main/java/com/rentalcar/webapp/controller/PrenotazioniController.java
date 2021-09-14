@@ -74,6 +74,14 @@ public class PrenotazioniController {
             throw new Exception(ErrMsg);
         }
 
+        if (prenotazioniService.checkAvailableVehicleInDatePrenotazione(prenotazione)>0){
+            String ErrMsg = "Non è possibile inserire perchè veicolo in uso in quelle date";
+
+            logger.warn(ErrMsg);
+
+            throw new Exception(ErrMsg);
+        }
+
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode responseNode = mapper.createObjectNode();
 
@@ -149,7 +157,7 @@ public class PrenotazioniController {
 
     // ------------------- APPROVA PRENOTAZIONE ------------------------------------
     @RequestMapping(value = "/approva/{id}", method = RequestMethod.PUT, produces = "application/json")
-    public ResponseEntity<?> approvePrenotazione(@PathVariable("id") Long id) throws NotFoundException {
+    public ResponseEntity<?> approvePrenotazione(@PathVariable("id") Long id) throws Exception {
         logger.info("Approviamo la prenotazione con id " + id);
         Prenotazioni prenotazione = prenotazioniService.getPrenotazione(id);
         if (prenotazione == null){
@@ -158,6 +166,14 @@ public class PrenotazioniController {
             logger.warn(MsgErr);
 
             throw new NotFoundException(MsgErr);
+        }
+
+        if (prenotazioniService.checkAvailableVehicleInDatePrenotazione(prenotazione)>0){
+            String ErrMsg = "Non è possibile inserire perchè veicolo in uso in quelle date";
+
+            logger.warn(ErrMsg);
+
+            throw new Exception(ErrMsg);
         }
 
         prenotazioniService.approvePrenotazione(id);

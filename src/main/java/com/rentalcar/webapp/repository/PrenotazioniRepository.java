@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,4 +24,9 @@ public interface PrenotazioniRepository extends JpaRepository<Prenotazioni, Long
     @Transactional
     @Query(value = "UPDATE Prenotazioni SET approved = TRUE where id = ?1")
     void approve(Long id);
+
+    @Query(value = "SELECT COUNT (*) FROM Prenotazioni WHERE automezzo.id = ?1 AND approved = TRUE AND (startdate BETWEEN ?2 AND ?3 OR enddate BETWEEN ?2 AND ?3 OR ?2 BETWEEN startdate AND enddate)")
+    Long checkAvailableVehicleInDatePrenotazione(/*Long automezzoId, */Long idAuto, Date start, Date end);
+    //TODO controllare con automezzoId se si sta cercando di approvare una modifica
+
 }
