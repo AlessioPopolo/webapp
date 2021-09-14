@@ -74,7 +74,7 @@ public class PrenotazioniController {
             throw new Exception(ErrMsg);
         }
 
-        if (prenotazioniService.checkAvailableVehicleInDatePrenotazione(prenotazione)>0){
+        if (prenotazioniService.checkAvailableVehicleInDatePrenotazione(prenotazione).size() > 0){
             String ErrMsg = "Non è possibile inserire perchè veicolo in uso in quelle date";
 
             logger.warn(ErrMsg);
@@ -110,6 +110,27 @@ public class PrenotazioniController {
 
             throw new Exception(ErrMsg);
         }
+
+        List<Prenotazioni> checkVehicle = prenotazioniService.checkAvailableVehicleInDatePrenotazione(prenotazione);
+
+        if (checkVehicle.size() > 1){
+            String ErrMsg = "Non è possibile inserire perchè veicolo in uso in quelle date";
+
+            logger.warn(ErrMsg);
+
+            throw new Exception(ErrMsg);
+        }
+        else if (checkVehicle.size() == 1){
+            Prenotazioni p = checkVehicle.get(0);
+            if (p.getId() != prenotazione.getId()){
+                String ErrMsg = "Non è possibile inserire perchè veicolo in uso in quelle date";
+
+                logger.warn(ErrMsg);
+
+                throw new Exception(ErrMsg);
+            }
+        }
+
         prenotazioniService.insertPrenotazione(prenotazione);
 
         String code = HttpStatus.OK.toString();
@@ -168,7 +189,7 @@ public class PrenotazioniController {
             throw new NotFoundException(MsgErr);
         }
 
-        if (prenotazioniService.checkAvailableVehicleInDatePrenotazione(prenotazione)>0){
+        if (prenotazioniService.checkAvailableVehicleInDatePrenotazione(prenotazione).size() > 0){
             String ErrMsg = "Non è possibile inserire perchè veicolo in uso in quelle date";
 
             logger.warn(ErrMsg);

@@ -25,8 +25,8 @@ public interface PrenotazioniRepository extends JpaRepository<Prenotazioni, Long
     @Query(value = "UPDATE Prenotazioni SET approved = TRUE where id = ?1")
     void approve(Long id);
 
-    @Query(value = "SELECT COUNT (*) FROM Prenotazioni WHERE automezzo.id = ?1 AND approved = TRUE AND (startdate BETWEEN ?2 AND ?3 OR enddate BETWEEN ?2 AND ?3 OR ?2 BETWEEN startdate AND enddate)")
-    Long checkAvailableVehicleInDatePrenotazione(/*Long automezzoId, */Long idAuto, Date start, Date end);
+    @Query(value = "SELECT * FROM Prenotazioni WHERE automezzo_id = ?1 AND approved = TRUE AND (start_date BETWEEN ?2 AND ?3 OR end_date BETWEEN ?2 AND ?3 OR ?2 BETWEEN start_date AND end_date)", nativeQuery = true)
+    List<Prenotazioni> checkAvailableVehicleInDatePrenotazione(/*Long automezzoId, */Long idAuto, Date start, Date end);
     //TODO controllare con automezzoId se si sta cercando di approvare una modifica
 
 }

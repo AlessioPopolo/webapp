@@ -23,6 +23,6 @@ public interface PrenotazioniService {
 
     boolean checkDataEndAfterDataStart(Prenotazioni prenotazione);
 
-    Long checkAvailableVehicleInDatePrenotazione(Prenotazioni prenotazione);
+    List<Prenotazioni> checkAvailableVehicleInDatePrenotazione(Prenotazioni prenotazione);
 
 }

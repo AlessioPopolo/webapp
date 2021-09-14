@@ -66,7 +66,7 @@ public class PrenotazioniServiceImpl implements PrenotazioniService{
     }
 
     @Override
-    public Long checkAvailableVehicleInDatePrenotazione(Prenotazioni prenotazione) {
+    public List<Prenotazioni> checkAvailableVehicleInDatePrenotazione(Prenotazioni prenotazione) {
         return prenotazioniRepository.checkAvailableVehicleInDatePrenotazione(/*prenotazione.getId(), */prenotazione.getAutomezzo().getId(), prenotazione.getStartdate(), prenotazione.getEnddate());
     }
 }
