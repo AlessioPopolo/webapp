@@ -5,8 +5,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rentalcar.webapp.dtos.InfoMsg;
 import com.rentalcar.webapp.entity.Automezzo;
 import com.rentalcar.webapp.entity.TipologiaAutomezzo;
+import com.rentalcar.webapp.entity.TipologiaUtente;
 import com.rentalcar.webapp.entity.Utente;
 import com.rentalcar.webapp.service.AutomezzoService;
+import com.rentalcar.webapp.service.TipologiaAutomezzoService;
+import com.rentalcar.webapp.service.TipologiaUtenteService;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +32,9 @@ public class AutomezzoController {
 
     @Autowired
     private AutomezzoService automezzoService;
+
+    @Autowired
+    private TipologiaAutomezzoService tipologiaAutomezzoService;
 
     @GetMapping(value = "/lista-auto")
     public ResponseEntity<List<Automezzo>> listAutomezzi(){
@@ -132,5 +138,26 @@ public class AutomezzoController {
 
         return new ResponseEntity<>(responseNode, new HttpHeaders(), HttpStatus.OK);
 
+    }
+
+    @GetMapping(value = "/lista-categorie")
+    public ResponseEntity<List<TipologiaAutomezzo>> listCategorie(){
+        List<TipologiaAutomezzo> categorie = tipologiaAutomezzoService.getAll();
+
+        return new ResponseEntity<>(categorie, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/categoria={id}")
+    public ResponseEntity<TipologiaAutomezzo> getCategoria(@PathVariable("id") Long id) {
+        TipologiaAutomezzo categoria = tipologiaAutomezzoService.getCategoria(id);
+        if (categoria == null)
+        {
+            String ErrMsg = "Categoria con id = " + id + " non trovata!";
+
+            logger.warn(ErrMsg);
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(categoria, HttpStatus.OK);
     }
 }
