@@ -3,7 +3,9 @@ package com.rentalcar.webapp.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rentalcar.webapp.dtos.InfoMsg;
+import com.rentalcar.webapp.entity.TipologiaUtente;
 import com.rentalcar.webapp.entity.Utente;
+import com.rentalcar.webapp.service.TipologiaUtenteService;
 import com.rentalcar.webapp.service.UtenteService;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
@@ -27,6 +29,9 @@ public class UtenteController {
 
     @Autowired
     private UtenteService utenteService;
+
+    @Autowired
+    private TipologiaUtenteService tipologiaUtenteService;
 
     @GetMapping(value = "/lista-utenti")
     public ResponseEntity<List<Utente>> listUtenti(){
@@ -153,5 +158,26 @@ public class UtenteController {
 
         return new ResponseEntity<>(responseNode, new HttpHeaders(), HttpStatus.OK);
 
+    }
+
+    @GetMapping(value = "/lista-ruoli")
+    public ResponseEntity<List<TipologiaUtente>> listRuoli(){
+        List<TipologiaUtente> ruoli = tipologiaUtenteService.getAll();
+
+        return new ResponseEntity<>(ruoli, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/ruolo={id}")
+    public ResponseEntity<TipologiaUtente> getRuolo(@PathVariable("id") Long id) {
+        TipologiaUtente ruolo = tipologiaUtenteService.getRuolo(id);
+        if (ruolo == null)
+        {
+            String ErrMsg = "Ruolo con id = " + id + " non trovato!";
+
+            logger.warn(ErrMsg);
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(ruolo, HttpStatus.OK);
     }
 }
