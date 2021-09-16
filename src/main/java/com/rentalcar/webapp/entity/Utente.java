@@ -1,11 +1,9 @@
 package com.rentalcar.webapp.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "utenti")
@@ -34,10 +32,6 @@ public class Utente {
     @ManyToOne
     @JoinColumn(name = "ruolo")
     private TipologiaUtente ruolo;
-
-    @JsonManagedReference(value = "utente-prenotazione")
-    @OneToMany(mappedBy = "utente")
-    private Set<Prenotazioni> prenotazioni;
 
     public Utente(){}
 
@@ -124,13 +118,6 @@ public class Utente {
         this.ruolo = ruolo;
     }
 
-    public Set<Prenotazioni> getPrenotazioni() {
-        return prenotazioni;
-    }
-
-    public void setPrenotazioni(Set<Prenotazioni> prenotazioni) {
-        this.prenotazioni = prenotazioni;
-    }
     @Override
     public String toString() {
         return "Utente [id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", data di nascita=" + this.getDatadinascita() + ", ruolo=" + this.getRuolo() + "]";

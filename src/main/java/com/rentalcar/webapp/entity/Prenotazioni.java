@@ -1,6 +1,5 @@
 package com.rentalcar.webapp.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -14,12 +13,10 @@ public class Prenotazioni {
     @Column(name = "id")
     private Long id;
 
-    @JsonBackReference(value = "utente-prenotazione")
     @ManyToOne
     @JoinColumn(name = "utenteId", nullable = false)
     private Utente utente;
 
-    @JsonBackReference(value = "automezzo-prenotazione")
     @ManyToOne
     @JoinColumn(name = "automezzoId", nullable = false)
     private Automezzo automezzo;

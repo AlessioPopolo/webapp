@@ -48,8 +48,9 @@ public class PrenotazioniServiceImpl implements PrenotazioniService{
 
     @Override
     @Transactional
-    public void approvePrenotazione(Long id) {
+    public List<Prenotazioni> approvePrenotazione(Long id) {
         prenotazioniRepository.approve(id);
+        return this.getAll();
     }
 
     @Override

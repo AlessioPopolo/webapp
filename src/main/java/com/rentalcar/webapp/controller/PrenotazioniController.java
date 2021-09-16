@@ -178,7 +178,7 @@ public class PrenotazioniController {
 
     // ------------------- APPROVA PRENOTAZIONE ------------------------------------
     @RequestMapping(value = "/approva/{id}", method = RequestMethod.PUT, produces = "application/json")
-    public ResponseEntity<?> approvePrenotazione(@PathVariable("id") Long id) throws Exception {
+    public ResponseEntity<List<Prenotazioni>> approvePrenotazione(@PathVariable("id") Long id) throws Exception {
         logger.info("Approviamo la prenotazione con id " + id);
         Prenotazioni prenotazione = prenotazioniService.getPrenotazione(id);
         if (prenotazione == null){
@@ -197,14 +197,12 @@ public class PrenotazioniController {
             throw new Exception(ErrMsg);
         }
 
-        prenotazioniService.approvePrenotazione(id);
-
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode responseNode = mapper.createObjectNode();
 
         responseNode.put("code", HttpStatus.OK.toString());
         responseNode.put("message", "Approvazione Prenotazione " + id + " Eseguita Con Successo");
 
-        return new ResponseEntity<>(responseNode, new HttpHeaders(), HttpStatus.OK);
+        return ResponseEntity.ok(prenotazioniService.approvePrenotazione(id));
     }
 }

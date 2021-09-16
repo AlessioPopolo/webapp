@@ -1,11 +1,9 @@
 package com.rentalcar.webapp.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "automezzi")
@@ -31,10 +29,6 @@ public class Automezzo {
     @ManyToOne
     @JoinColumn(name = "categoria", nullable = false)
     private TipologiaAutomezzo categoria;
-
-    @JsonManagedReference(value = "automezzo-prenotazione")
-    @OneToMany(mappedBy = "automezzo")
-    private Set<Prenotazioni> prenotazioni;
 
     public Automezzo() {
     }
@@ -104,14 +98,6 @@ public class Automezzo {
         this.categoria = categoria;
     }
 
-    public Set<Prenotazioni> getPrenotazioni() {
-        return prenotazioni;
-    }
-
-    public void setPrenotazioni(Set<Prenotazioni> prenotazioni) {
-        this.prenotazioni = prenotazioni;
-    }
-
     @Override
     public String toString() {
         return "Automezzo{" +
@@ -121,7 +107,6 @@ public class Automezzo {
                 ", modello='" + modello + '\'' +
                 ", immatricolazione=" + immatricolazione +
                 ", categoria=" + categoria +
-                ", prenotazioni=" + prenotazioni +
                 '}';
     }
 }
