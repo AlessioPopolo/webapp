@@ -66,7 +66,7 @@ public class AutomezzoController {
         return new ResponseEntity<>(automezzo, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/categoria={categoria}")
+    @GetMapping(value = "/listaAutoCategoria={categoria}")
     public ResponseEntity<List<Automezzo>> getAutomezzoByCategoria(@PathVariable("categoria") String categoria) {
         List<Automezzo> automezzi = automezzoService.findAutoByCategoria(categoria);
         return new ResponseEntity<>(automezzi, HttpStatus.OK);
