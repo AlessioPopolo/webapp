@@ -77,6 +77,7 @@ public class AutomezzoController {
     public ResponseEntity<?> insertAutomezzo(@RequestBody Automezzo automezzo) {
         logger.info("Salviamo l'automezzo con id " + automezzo.getId());
 
+        automezzo.setCategoria(tipologiaAutomezzoService.getCategoria(Long.parseLong(automezzo.getCategoria().getCategoria())));
         automezzoService.insertAutomezzo(automezzo);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -100,6 +101,7 @@ public class AutomezzoController {
 
             throw new NotFoundException(ErrMsg);
         }
+        automezzo.setCategoria(tipologiaAutomezzoService.getCategoria(Long.parseLong(automezzo.getCategoria().getCategoria())));
         automezzoService.insertAutomezzo(automezzo);
 
         String code = HttpStatus.OK.toString();
