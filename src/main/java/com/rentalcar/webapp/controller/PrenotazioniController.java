@@ -131,12 +131,13 @@ public class PrenotazioniController {
             }
         }
 
-        prenotazioniService.insertPrenotazione(prenotazione);
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode responseNode = mapper.createObjectNode();
 
-        String code = HttpStatus.OK.toString();
-        String message = String.format("Modifica prenotazione %s Eseguita Con Successo", prenotazione.getId());
+        responseNode.put("code", HttpStatus.OK.toString());
+        responseNode.put("message", "Modifica Prenotazione " + prenotazione.getId() + " Eseguita Con Successo");
 
-        return new ResponseEntity<>(new InfoMsg(code, message), HttpStatus.CREATED);
+        return ResponseEntity.ok(prenotazioniService.insertPrenotazione(prenotazione));
     }
 
     // ------------------- ELIMINAZIONE PRENOTAZIONE ------------------------------------
