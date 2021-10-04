@@ -22,7 +22,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/automezzo")
-@CrossOrigin(origins = "http://localhost:4200")
 public class AutomezzoController {
 
     private static final Logger logger = LoggerFactory.getLogger(AutomezzoController.class);

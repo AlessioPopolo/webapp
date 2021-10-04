@@ -2,7 +2,6 @@ package com.rentalcar.webapp.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.rentalcar.webapp.dtos.InfoMsg;
 import com.rentalcar.webapp.entity.Prenotazioni;
 import com.rentalcar.webapp.service.PrenotazioniService;
 import javassist.NotFoundException;
@@ -18,7 +17,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/prenotazioni")
-@CrossOrigin(origins = "http://localhost:4200")
 public class PrenotazioniController {
 
     private static final Logger logger = LoggerFactory.getLogger(PrenotazioniController.class);
@@ -122,7 +120,7 @@ public class PrenotazioniController {
         }
         else if (checkVehicle.size() == 1){
             Prenotazioni p = checkVehicle.get(0);
-            if (p.getId() != prenotazione.getId()){
+            if (!p.getId().equals(prenotazione.getId())){
                 String ErrMsg = "Non è possibile inserire perchè veicolo in uso in quelle date";
 
                 logger.warn(ErrMsg);
